@@ -14,28 +14,27 @@ import java.util.List;
 public class BuildingAPI {
     @Autowired
     private BuildingService buildingService;
-
+    // Thêm mới, sửa tòa nhà
     @PostMapping
     public BuildingDTO addOrUpdateBuilding(@RequestBody BuildingDTO buildingDTO){
-        //xuong DB update them moi
+        buildingService.UpgradeOrAddBuilding(buildingDTO);
         return buildingDTO;
     }
-
+    // Xóa tòa nhà dựa vào id
     @DeleteMapping("/{ids}")
     public void deleteBuilding(@PathVariable List<Long> ids){
-        //xuong db de xoa building theo id gui ve
-        System.out.println("ok");
-
+        buildingService.DeleteBulding(ids);
     }
+    //Thao tác hiển thị nhân viên lên modal
     @GetMapping("/{id}/staffs")
     public ResponseDTO loadStaffs(@PathVariable Long id){
         ResponseDTO result = buildingService.listStaffs(id);
         return result;
     }
-
+    //THao tác giao nhân viên
     @PostMapping("/assignment")
     public void updateAssignmentBuilding(@RequestBody AssignmentBuildingDTO assignmentBuildingDTO){
-        System.out.println("ok");
+        buildingService.GiveBuildingForStaff(assignmentBuildingDTO);
     }
 
 }

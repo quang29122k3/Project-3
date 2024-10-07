@@ -378,6 +378,8 @@
         e.preventDefault();
         $('#listForm').submit();
     });
+
+    // Xóa tòa nhà
     function deleteBuilding(data){
         var buildingId =[data];
         deleteBuildings(buildingId);

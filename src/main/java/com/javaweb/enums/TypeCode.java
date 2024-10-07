@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public enum TypeCode {
-    NOT_THAT("Nội thất"),
+    NOI_THAT("Nội thất"),
     NGUYEN_CAN("Nguyên căn"),
     TANG_TRET("Tầng trệt"),
     ;

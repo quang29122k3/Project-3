@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "building")
-public class BuildingEntity extends BaseEntity{
+public class BuildingEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,8 +17,8 @@ public class BuildingEntity extends BaseEntity{
     private String street;
     @Column(name = "ward")
     private String ward;
-    //	@Column(name="districtid")
-//	private Integer districtid;
+    @Column(name = "district")
+    private String district;
     @Column(name = "structure")
     private String structure;
     @Column(name = "numberofbasement")
@@ -30,11 +30,11 @@ public class BuildingEntity extends BaseEntity{
     @Column(name = "level")
     private Integer level;
     @Column(name = "rentprice")
-    private Integer rentprice;
+    private Integer rentPrice;
     @Column(name = "rentpricedescription")
     private String rentpricedescription;
     @Column(name = "servicefee")
-    private Integer servicefee;
+    private Integer serviceFee;
     @Column(name = "carfee")
     private Integer carfee;
     @Column(name = "motofee")
@@ -54,38 +54,55 @@ public class BuildingEntity extends BaseEntity{
     @Column(name = "decorationtime")
     private Integer decorationtime;
     @Column(name = "brokeragefee")
-    private Integer brokeragefee;
+    private Integer brokerageFee;
     @Column(name = "note")
     private String note;
     @Column(name = "linkofbuilding")
     private String linkofbuilding;
     @Column(name = "map")
     private String map;
-    @Column(name = "createddate" , insertable = false, updatable = false)
-    private Date createddate;
-    @Column(name = "modifieddate" , insertable = false, updatable = false)
+    @Column(name = "createddate", insertable = false, updatable = false)
+    private Date createdDate;
+    @Column(name = "modifieddate", insertable = false, updatable = false)
     private Date modifieddate;
     @Column(name = "managername")
     private String managerName;
     @Column(name = "managerphone")
     private Integer managerPhone;
-    @Column(name = "createdby" , insertable = false, updatable = false)
+    @Column(name = "createdby", insertable = false, updatable = false)
     private String createdby;
-    @Column(name = "modifiedby",  insertable = false, updatable = false)
+    @Column(name = "modifiedby", insertable = false, updatable = false)
     private String modifiedby;
+    @Column(name = "type")
+    private String type;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "assignmentbuilding",
-                joinColumns = @JoinColumn(name = "buildingid",nullable = false),
-                inverseJoinColumns = @JoinColumn(name = "staffid",nullable = false))
-    private List<UserEntity> userEntities = new ArrayList<>();
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "assignmentbuilding",
+//                joinColumns = @JoinColumn(name = "buildingid",nullable = false),
+//                inverseJoinColumns = @JoinColumn(name = "staffid",nullable = false))
+
+    @OneToMany(mappedBy = "building1", fetch = FetchType.LAZY)
+    private List<RentAreaEntity> rentAreaEntities = new ArrayList<>();
+
+    @OneToMany(mappedBy = "building2", fetch = FetchType.LAZY)
+    private List<AssignmentBuildingEntity> assignmentBuildingEntities = new ArrayList<>();
+//    private List<UserEntity> userEntities = new ArrayList<>();
 
     @Override
     public Long getId() {
         return id;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -154,13 +171,6 @@ public class BuildingEntity extends BaseEntity{
         this.level = level;
     }
 
-    public Integer getRentprice() {
-        return rentprice;
-    }
-
-    public void setRentprice(Integer rentprice) {
-        this.rentprice = rentprice;
-    }
 
     public String getRentpricedescription() {
         return rentpricedescription;
@@ -170,13 +180,6 @@ public class BuildingEntity extends BaseEntity{
         this.rentpricedescription = rentpricedescription;
     }
 
-    public Integer getServicefee() {
-        return servicefee;
-    }
-
-    public void setServicefee(Integer servicefee) {
-        this.servicefee = servicefee;
-    }
 
     public Integer getCarfee() {
         return carfee;
@@ -250,13 +253,6 @@ public class BuildingEntity extends BaseEntity{
         this.decorationtime = decorationtime;
     }
 
-    public Integer getBrokeragefee() {
-        return brokeragefee;
-    }
-
-    public void setBrokeragefee(Integer brokeragefee) {
-        this.brokeragefee = brokeragefee;
-    }
 
     public String getNote() {
         return note;
@@ -282,13 +278,6 @@ public class BuildingEntity extends BaseEntity{
         this.map = map;
     }
 
-    public Date getCreateddate() {
-        return createddate;
-    }
-
-    public void setCreateddate(Date createddate) {
-        this.createddate = createddate;
-    }
 
     public Date getModifieddate() {
         return modifieddate;
@@ -314,13 +303,13 @@ public class BuildingEntity extends BaseEntity{
         this.managerPhone = managerPhone;
     }
 
-    public List<UserEntity> getUserEntities() {
-        return userEntities;
-    }
-
-    public void setUserEntities(List<UserEntity> userEntities) {
-        this.userEntities = userEntities;
-    }
+//    public List<UserEntity> getUserEntities() {
+//        return userEntities;
+//    }
+//
+//    public void setUserEntities(List<UserEntity> userEntities) {
+//        this.userEntities = userEntities;
+//    }
 
     public String getCreatedby() {
         return createdby;
@@ -336,5 +325,65 @@ public class BuildingEntity extends BaseEntity{
 
     public void setModifiedby(String modifiedby) {
         this.modifiedby = modifiedby;
+    }
+
+
+    public List<RentAreaEntity> getRentAreaEntities() {
+        return rentAreaEntities;
+    }
+
+    public void setRentAreaEntities(List<RentAreaEntity> rentAreaEntities) {
+        this.rentAreaEntities = rentAreaEntities;
+    }
+
+    public List<AssignmentBuildingEntity> getAssignmentBuildingEntities() {
+        return assignmentBuildingEntities;
+    }
+
+    public void setAssignmentBuildingEntities(List<AssignmentBuildingEntity> assignmentBuildingEntities) {
+        this.assignmentBuildingEntities = assignmentBuildingEntities;
+
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public Integer getRentPrice() {
+        return rentPrice;
+    }
+
+    public void setRentPrice(Integer rentPrice) {
+        this.rentPrice = rentPrice;
+    }
+
+    public Integer getServiceFee() {
+        return serviceFee;
+    }
+
+    public void setServiceFee(Integer serviceFee) {
+        this.serviceFee = serviceFee;
+    }
+
+    public Integer getBrokerageFee() {
+        return brokerageFee;
+    }
+
+    public void setBrokerageFee(Integer brokerageFee) {
+        this.brokerageFee = brokerageFee;
+    }
+
+    @Override
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    @Override
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 }
